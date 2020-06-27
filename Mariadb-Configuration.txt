@@ -5,7 +5,8 @@
     - INSTALL MARIADB 
         - Execute command sudo apt-get install mariadb-server
         - Wait for installation to complete
-        - After installation is completed, run the command "sudo mysql_secure_installation
+        - After installation is completed, execuet command "sudo mysql_install_db". This will install system tables to directory /var/lib/mysql
+        - Run the command "sudo mysql_secure_installation
         - For the following questions choose requried configuration 
             - Change root password? Y
             - Enter new Root password
