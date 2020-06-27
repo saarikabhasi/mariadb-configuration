@@ -1,0 +1,44 @@
+#### Configuring Mariadb to work with remote connection
+
+## Steps
+
+    - INSTALL MARIADB 
+        - Execute command sudo apt-get install mariadb-server
+        - Wait for installation to complete
+        - After installation is completed, run the command "sudo mysql_secure_installation
+        - For the following questions choose requried configuration 
+            - Change root password? Y
+            - Enter new Root password
+            - Remove remote root access : Yes
+            - Remove test DBs: Y/N select if you need to keep the remote db'select
+        - Login to mariadb  using command " sudo mysql -u root - p. Press Return
+            - Provide root user password
+            - Create a new Database
+                - CREATE DATABASE <DATABASE_NAME>;
+            - Create new user   
+                - CREATE USER 'exampleuser'@'localhost' IDENTIFIED BY 'examplePassword';
+            - Provide access to new user to db
+                - GRANT ALL PRIVILEGES ON *.* to 'exampleuser'@'<IP_MARIADB_SERVER>' IDENTIFIED BY 'examplePassword' 
+                    WITH GRANT OPTION;
+            - Flush PRIVILEGES
+                FLUSH PRIVILEGES;
+            
+
+    - CONFIGURE MARIADB for remote connection
+        - navigate to mysql folder in etc
+            - execute command "cd /etc/mysql"
+        - Add custom configuration 
+            - open file my.cnf in nano editor with sudo access
+            - " sudo nano my.cnf"
+            - to use a custom port add below configuration 
+                - under [client-server] add line port=<custom_port>
+            - to bind the service to a particular ip add below line
+                - add [mysqld] and in next line add bind-address=<required_ip>
+        - check configuration by executing the below command
+            - " mysql --print-defaults"
+            - this should show the updated port and bind configurations
+        - Restart the service
+            - sudo systemctl restart mariadb
+        - Check status of the service
+            - sudo systemctl status mariadb
+            
